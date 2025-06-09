@@ -1,0 +1,44 @@
+﻿@model Proyecto.Models.Proveedor
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+<div class="container">
+    <h2 class="my-4 text-danger">Eliminar Proveedor</h2>
+
+    <p class="text">¿Estás seguro que deseas eliminar este proveedor?</p>
+    <div class="border rounded p-4 bg-light">
+        <h4 class="text">Detalles del Proveedor</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Nombre)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Nombre)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Telefono)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Telefono)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Email)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <br>
+            <div class="form-group d-flex gap-3">
+                <input type="submit" value="Eliminar" class="btn btn-danger mr-2" />
+                <a asp-action="Index" class="btn btn-lg btn-outline-dark shadow-sm">Volver a la lista</a>
+            </div>
+        </form>
+    </div>
+</div>
