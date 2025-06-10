@@ -1,18 +1,4 @@
-﻿@model IEnumerable<Proyecto.Models.Kardex>
-
-@{
-    ViewData["Title"] = "Index";
-}
-
-
-<div class="text-center py-5 bg-primary text-white rounded shadow-lg mb-4">
-   
-    <h2 class="display-6">Producto Más Vendido</h2>
-    <p class="lead">¡Descubre cuál es el producto que más se ha vendido!</p>
-</div>
-
-
-@if (ViewBag.Producto != null)
+﻿@if (ViewBag.Producto != null)
 {
     <div class="card shadow-lg mb-4">
         <div class="card-header bg-success text-white">
@@ -23,6 +9,11 @@
                 <strong>Producto:</strong> @ViewBag.Producto <br />
                 <strong>Total Vendido:</strong> @ViewBag.Total
             </h5>
+            <div class="mt-4">
+                <a asp-action="DescargarPdf" class="btn btn-danger">
+                    <i class="bi bi-file-earmark-pdf-fill"></i> Descargar PDF
+                </a>
+            </div>
         </div>
     </div>
 }

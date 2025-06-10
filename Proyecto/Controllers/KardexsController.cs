@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Proyecto.Data;
 using Proyecto.Models;
 
+
 namespace Proyecto.Controllers
 {
     [Authorize(Roles = "Administrador,JefeAlmacen,AuxiliarAlmacen")]
