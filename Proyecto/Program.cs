@@ -11,36 +11,31 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<ProyectoContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Servicios personalizados
 builder.Services.AddScoped<AuthService>();
+builder.Services.AddSingleton<LoginAttemptService>(); // 👈 Mueve esto arriba, antes del Build()
 
+// Autenticación
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
         options.Cookie.Name = "AuthCookie";
         options.LoginPath = "/Auth/Index";
-        options.AccessDeniedPath = "/Home/Index"; // ← redirige al inicio si no tiene permisos
+        options.AccessDeniedPath = "/Home/Index";
         options.ExpireTimeSpan = TimeSpan.FromHours(1);
         options.SlidingExpiration = false;
     });
 
-
-
-
-builder.Services.AddAuthorization(options =>
-{
-    //options.FallbackPolicy = new AuthorizationPolicyBuilder()
-      //  .RequireAuthenticatedUser()
-        //.Build();
-});
+// Autorización (sin fallback por ahora)
+builder.Services.AddAuthorization();
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuración de entorno
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
 
@@ -48,6 +43,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+// Prevención de cacheo en páginas protegidas
 app.Use(async (ctx, next) =>
 {
     ctx.Response.Headers["Cache-Control"] = "no-store, no-cache, must-revalidate";
@@ -55,9 +52,11 @@ app.Use(async (ctx, next) =>
     ctx.Response.Headers["Expires"] = "0";
     await next();
 });
-app.UseAuthentication();  
+
+app.UseAuthentication();
 app.UseAuthorization();
 
+// Rutas
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Auth}/{action=Index}/{id?}");

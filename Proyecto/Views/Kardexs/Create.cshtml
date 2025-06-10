@@ -12,30 +12,35 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="FechaMovimiento" class="control-label"></label>
+
+            <div class="form-group mb-3">
+                <label for="FechaMovimiento" class="form-label fw-bold">Fecha de Movimiento</label>
                 <input asp-for="FechaMovimiento" class="form-control" />
                 <span asp-validation-for="FechaMovimiento" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label asp-for="TipoMovId" class="control-label"></label>
-                <select asp-for="TipoMovId" class ="form-control" asp-items="ViewBag.TipoMovId"></select>
+
+            <div class="form-group mb-3">
+                <label for="TipoMovId" class="form-label fw-bold">Tipo de Movimiento</label>
+                <select asp-for="TipoMovId" class="form-select" asp-items="ViewBag.TipoMovId"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="InventarioId" class="control-label"></label>
-                <select asp-for="InventarioId" class ="form-control" asp-items="ViewBag.InventarioId"></select>
+
+            <div class="form-group mb-3">
+                <label for="InventarioId" class="form-label fw-bold">Inventario</label>
+                <select asp-for="InventarioId" class="form-select" asp-items="ViewBag.InventarioId"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="ProductoId" class="control-label"></label>
-                <select asp-for="ProductoId" class ="form-control" asp-items="ViewBag.ProductoId"></select>
+
+            <div class="form-group mb-3">
+                <label for="ProductoId" class="form-label fw-bold">Producto</label>
+                <select asp-for="ProductoId" class="form-select" asp-items="ViewBag.ProductoId"></select>
             </div>
-            <div class="form-group">
-                <label asp-for="jefeAlmacenId" class="control-label"></label>
-                <select asp-for="jefeAlmacenId" class ="form-control" asp-items="ViewBag.jefeAlmacenId"></select>
+
+            <div class="form-group mb-3">
+                <label for="jefeAlmacenId" class="form-label fw-bold">Jefe de Almacén</label>
+                <select asp-for="jefeAlmacenId" class="form-select" asp-items="ViewBag.jefeAlmacenId"></select>
             </div>
-            <br>
+
             <div class="form-group d-flex gap-3">
-                <input type="submit" value="Crear" class="btn btn-primary mr-2" />
+                <input type="submit" value="Crear" class="btn btn-primary" />
                 <a asp-action="Index" class="btn btn-lg btn-outline-dark shadow-sm">Volver a la lista</a>
             </div>
         </form>

@@ -7,10 +7,9 @@
 }
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="/css/login.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -19,9 +18,35 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-    <div class="login-container">
+    <div class="login-container text-center">
         <img src="/images/login2.png" alt="User Icon">
 
+        <!-- BLOQUEO -->
+        @if (ViewBag.TiempoRestante != null)
+        {
+            <div class="alert alert-danger mt-3" id="bloqueo-container">
+                <strong>Tu cuenta está bloqueada.</strong><br />
+                Intenta de nuevo en <span id="timer">@ViewBag.TiempoRestante</span> segundos.
+            </div>
+
+            <script>
+                let segundos = parseInt("@ViewBag.TiempoRestante");
+                const timerSpan = document.getElementById("timer");
+
+                const interval = setInterval(() => {
+                    segundos--;
+                    if (segundos <= 0) {
+                        clearInterval(interval);
+                        timerSpan.innerText = "0";
+                        location.reload();
+                    } else {
+                        timerSpan.innerText = segundos;
+                    }
+                }, 1000);
+            </script>
+        }
+
+        <!-- FORMULARIO -->
         <form action="/Auth/Login" method="post">
             <label for="nombre" style="font-size:16px">Nombre de Usuario</label>
             <input type="text" id="nombre" name="nombre" required>
@@ -29,16 +54,13 @@
             <label for="contra" style="font-size:16px">Contraseña</label>
             <input type="password" id="contra" name="contra" required>
 
-            <!-- reCAPTCHA visual -->
             <div class="g-recaptcha mt-3 mb-2" data-sitekey="6LcdREorAAAAAOxsavayGM1hSELt5SS0IQ6l3CQA"></div>
-
-            
 
             <button type="submit" class="btn-custom">Iniciar Sesión</button>
         </form>
     </div>
 
-    <!-- Modal de error -->
+    <!-- MODAL DE ERROR -->
     <div class="modal fade" id="errorModal" tabindex="-1" aria-labelledby="errorModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
@@ -47,7 +69,10 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
                 </div>
                 <div class="modal-body">
-                    Usuario, contraseña o captcha incorrectos. Inténtalo nuevamente.
+                    @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+                    {
+                        <p>@error.ErrorMessage</p>
+                    }
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
@@ -57,8 +82,9 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-    @if (!ViewData.ModelState.IsValid)
+    @if (!ViewData.ModelState.IsValid && ViewBag.TiempoRestante == null)
     {
         <script>
             window.addEventListener('DOMContentLoaded', function () {
@@ -67,7 +93,5 @@
             });
         </script>
     }
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
 </body>
 </html>
