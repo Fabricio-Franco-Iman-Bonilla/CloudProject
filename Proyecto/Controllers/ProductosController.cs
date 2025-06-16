@@ -160,13 +160,22 @@ namespace Proyecto.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var producto = await _context.Productos.FindAsync(id);
-            if (producto != null)
+            if (producto == null)
             {
-                _context.Productos.Remove(producto);
+                return NotFound();
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                _context.Productos.Remove(producto);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException)
+            {
+                TempData["ErrorMessage"] = "❌ No se puede eliminar este producto porque está asociado a uno o más pedidos.";
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         private bool ProductoExists(int id)

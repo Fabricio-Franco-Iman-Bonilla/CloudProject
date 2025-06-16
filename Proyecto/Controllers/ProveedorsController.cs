@@ -142,13 +142,23 @@ namespace Proyecto.Controllers
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var proveedor = await _context.Proveedor.FindAsync(id);
-            if (proveedor != null)
+            if (proveedor == null)
             {
-                _context.Proveedor.Remove(proveedor);
+                return NotFound();
             }
 
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                _context.Proveedor.Remove(proveedor);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException ex)
+            {
+                // Verifica si la excepción es por clave foránea
+                TempData["ErrorMessage"] = "❌ No se puede eliminar este proveedor porque está asociado a uno o más productos.";
+                return RedirectToAction(nameof(Index));
+            }
         }
 
         private bool ProveedorExists(int id)
