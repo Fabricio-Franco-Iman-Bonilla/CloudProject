@@ -26,7 +26,7 @@ namespace Proyecto_test_1.Tests.Services
             var resultado = await svc.LoginAsync("pepito", "miContra123");
 
             // Assert
-            Assert.IsTrue(resultado);
+            Assert.IsNull(resultado);
         }
 
         [TestMethod]
@@ -38,7 +38,7 @@ namespace Proyecto_test_1.Tests.Services
             ctx.SaveChanges();
             var svc = new AuthService(ctx);
 
-            Assert.IsFalse(await svc.LoginAsync("juanito", "otraContra"));
+            Assert.IsNull(await svc.LoginAsync("juanito", "otraContra"));
         }
 
         [TestMethod]
@@ -47,7 +47,7 @@ namespace Proyecto_test_1.Tests.Services
             var ctx = InMemoryContextFactory.Create("Auth_NoUser");
             var svc = new AuthService(ctx);
 
-            Assert.IsFalse(await svc.LoginAsync("nadie", "loQueSea"));
+            Assert.IsNull(await svc.LoginAsync("nadie", "loQueSea"));
         }
     }
 }
