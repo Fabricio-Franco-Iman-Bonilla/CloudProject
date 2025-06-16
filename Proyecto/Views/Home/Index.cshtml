@@ -2,9 +2,18 @@
     ViewData["Title"] = "Tienda de Peluche";
 }
 
-<div class="text-center">
-    <h1 class="display-4 my-4">¡Bienvenido a la Tienda de Aguiluu!</h1>
-    <p class="lead">Explora nuestro encantador mundo de peluches suaves y adorables.</p>
+<!-- Botones de accesibilidad -->
+<div class="accesibilidad">
+    <button onclick="cambiarTamanioTexto(1)" class="btn btn-sm btn-dark">A+</button>
+    <button onclick="cambiarTamanioTexto(-1)" class="btn btn-sm btn-dark">A-</button>
+    <button onclick="alternarContraste()" class="btn btn-sm btn-secondary">🌓 Contraste</button>
+</div>
+
+<div class="text-center cuerpo-tienda">
+    <h1 class="display-4 my-4 titulo-principal">¡Bienvenido a la Tienda de Aguiluu!</h1>
+    <p class="lead subtitulo-principal">Explora nuestro encantador mundo de peluches suaves y adorables.</p>
+
+
 
     <div class="container">
         <div class="row">
@@ -31,17 +40,17 @@
             </div>
         </div>
 
-        <div class="mt-5 p-4 bg-light rounded shadow">
+        <div class="mt-5 p-4 bg-light rounded shadow seccion-info">
             <h3 class="text-center text-dark">¿Por qué elegirnos?</h3>
             <p class="text-center">Ofrecemos peluches de la mejor calidad, ideales para todos los amantes de los peluches. Nuestros productos son seguros, suaves y perfectos para regalar o disfrutar.</p>
         </div>
 
-        <footer class="mt-5">
+        <footer class="mt-5 text-muted">
             <p class="text-muted">© 2024 Tienda de Peluches. Todos los derechos reservados.</p>
         </footer>
     </div>
 
-    <!-- Modal -->
+    <!-- Modal para imagen grande -->
     <div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 bg-transparent">
@@ -53,23 +62,84 @@
     </div>
 </div>
 
+<!-- Scripts -->
 <script>
-    // Función para mostrar la imagen seleccionada en el modal
+    // Mostrar imagen en el modal
     function showImage(element) {
         const modalImage = document.getElementById('modalImage');
-        modalImage.src = element.src; // Asigna la fuente de la imagen seleccionada al modal
-        modalImage.alt = element.alt; // Asigna el texto alternativo al modal
+        modalImage.src = element.src;
+        modalImage.alt = element.alt;
+    }
+
+    // Tamaño de fuente
+    let tamañoFuente = 100;
+    function cambiarTamanioTexto(cambio) {
+        tamañoFuente += cambio * 10;
+        if (tamañoFuente < 80) tamañoFuente = 80;
+        if (tamañoFuente > 200) tamañoFuente = 200;
+        document.body.style.fontSize = tamañoFuente + '%';
+    }
+
+    // Contraste
+    function alternarContraste() {
+        document.body.classList.toggle('dark-mode');
     }
 </script>
 
+<!-- Estilos adicionales -->
 <style>
-    /* Estilo personalizado */
     .modal-content {
-        background: none; /* Fondo transparente */
-        border: none; /* Sin bordes */
+        background: none;
+        border: none;
     }
 
     .modal-body img {
-        transition: transform 0.3s ease; /* Animación suave para el escalado */
+        transition: transform 0.3s ease;
+    }
+
+    .accesibilidad {
+        position: fixed;
+        bottom: 10px;
+        right: 10px;
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .dark-mode {
+        background-color: #121212 !important;
+        color: #f0f0f0 !important;
+    }
+
+        .dark-mode .img-thumbnail {
+            filter: brightness(0.8);
+        }
+
+        .dark-mode .seccion-info {
+            background-color: #2a2a2a !important;
+            color: #f0f0f0;
+        }
+
+        .dark-mode h1,
+        .dark-mode h3,
+        .dark-mode p,
+        .dark-mode footer {
+            color: #f0f0f0 !important;
+        }
+
+        .dark-mode .titulo-principal,
+        .dark-mode .subtitulo-principal {
+            color: #f0f0f0 !important;
+        }
+
+
+
+        .dark-mode .modal-content {
+            background-color: transparent;
+        }
+
+    .cuerpo-tienda {
+        transition: background-color 0.3s, color 0.3s;
     }
 </style>
