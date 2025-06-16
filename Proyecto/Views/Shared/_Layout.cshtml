@@ -20,7 +20,7 @@
         }
 
         .card {
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
 
         .logo {
@@ -28,7 +28,7 @@
             height: 50px;
             border-radius: 50%;
             object-fit: cover;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
         }
 
         .icon {
@@ -43,22 +43,39 @@
     </style>
 </head>
 <body>
+
+    <!-- 🗣️ Botón flotante de lectura (aparecerá en todas las vistas que usan este layout) -->
+    <button id="btnLeer" onclick="leerPagina()" style="
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        z-index: 1000;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 60px;
+        height: 60px;
+        font-size: 25px;
+        box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+        cursor: pointer;
+    " title="Escuchar contenido">
+        🗣️
+    </button>
+
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-
                 <li class="nav-item" style="margin-right: auto;">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="display: flex; align-items: center;">
+                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="display:flex; align-items:center;">
                         <img class="logo" src="~/images/logo.jpg" alt="Logo Aguilu">
-                        <span style="margin-left: 10px; font-size: 1.2rem;">Tienda Aguilu</span>
+                        <span style="margin-left:10px; font-size:1.2rem;">Tienda Aguilu</span>
                     </a>
                 </li>
-
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.Identity.IsAuthenticated)
@@ -66,7 +83,6 @@
                             <p class="nav-item text-dark" style="margin-left:10px; margin-top:10px;">
                                 Bienvenido, @User.Identity.Name
                             </p>
-
                             @* ADMINISTRADOR *@
                             @if (User.IsInRole("Administrador"))
                             {
@@ -78,7 +94,6 @@
                                 <li class="nav-item"><a class="nav-link text-dark" asp-controller="TipoMovimientos" asp-action="Index">Tipo Movimientos</a></li>
                                 <li class="nav-item"><a class="nav-link text-dark" asp-controller="TipoPagos" asp-action="Index">Tipo Pagos</a></li>
                             }
-
                             @* ADMINISTRADOR + JEFE DE ALMACÉN *@
                             @if (User.IsInRole("Administrador") || User.IsInRole("JefeAlmacen"))
                             {
@@ -86,7 +101,6 @@
                                 <li class="nav-item"><a class="nav-link text-dark" asp-controller="Proveedors" asp-action="Index">Proveedores</a></li>
                                 <li class="nav-item"><a class="nav-link text-dark" asp-controller="RegistroPagos" asp-action="Index">Pagos</a></li>
                             }
-
                             @* TODOS LOS ROLES *@
                             @if (User.IsInRole("Administrador") || User.IsInRole("JefeAlmacen") || User.IsInRole("AuxiliarAlmacen"))
                             {
@@ -96,10 +110,9 @@
                             }
                         }
                     </ul>
-
                     @if (User.Identity.IsAuthenticated)
                     {
-                        <li class="nav-item" style="margin-right: auto; margin-left: 320px">
+                        <li class="nav-item" style="margin-right:auto; margin-left:320px">
                             <form asp-controller="Auth" asp-action="Logout" method="post" class="d-inline" style="display:flex; align-items:center;">
                                 @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-danger d-flex align-items-center">
@@ -132,5 +145,24 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        // Inicializa el sintetizador de voz
+        let sintetizador = window.speechSynthesis;
+
+        function leerPagina() {
+            // Si ya está hablando, detener
+            if (sintetizador.speaking) {
+                sintetizador.cancel();
+                return;
+            }
+            // Tomar solo el contenido dentro de <main>
+            let contenido = document.querySelector('main')?.innerText.trim() || '';
+            if (!contenido) return;
+            let lectura = new SpeechSynthesisUtterance(contenido);
+            lectura.lang = 'es-ES';
+            sintetizador.speak(lectura);
+        }
+    </script>
 </body>
 </html>
