@@ -76,7 +76,7 @@
 
         .accesibilidad {
             position: fixed;
-            bottom: 10px;
+            bottom: 0px;
             right: 10px;
             z-index: 1000;
             display: flex;
@@ -92,20 +92,15 @@
         <button onclick="cambiarTamanioTexto(1)" class="btn btn-sm btn-dark">A+</button>
         <button onclick="cambiarTamanioTexto(-1)" class="btn btn-sm btn-dark">A-</button>
         <button onclick="alternarContraste()" class="btn btn-sm btn-secondary">🌓 Contraste</button>
-    </div>
+        <!-- 🗣️ Botón flotante de lectura (aparecerá en todas las vistas que usan este layout) -->
 
-    <!-- 🗣️ Botón flotante de lectura (aparecerá en todas las vistas que usan este layout) -->
+    </div>
     <button id="btnLeer" onclick="leerPagina()" style="
-        position: fixed;
-        bottom: 30px;
-        right: 30px;
-        z-index: 1000;
+        
         background-color: #4CAF50;
         color: white;
         border: none;
         border-radius: 50%;
-        width: 60px;
-        height: 60px;
         font-size: 25px;
         box-shadow: 0 4px 8px rgba(0,0,0,0.3);
         cursor: pointer;
@@ -113,32 +108,29 @@
         🗣️
     </button>
 
+    
+
 
     <header>
         <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom shadow-sm">
             <div class="container-fluid">
-
+                
                 <a class="navbar-brand d-flex align-items-center" asp-area="" asp-controller="Home" asp-action="Index">
                     <img class="logo me-2" src="~/images/logo.jpg" alt="Logo Aguilu">
                     <span class="fw-bold fs-4">Tienda Aguilu</span>
                 </a>
-
+                
                 <!-- Botón hamburguesa: visible en pantallas pequeñas -->
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
+                <!--<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuPrincipal"
                         aria-controls="menuPrincipal" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
-                </button>
+                </button>-->
 
                 <!-- Menú principal -->
                 <div class="collapse navbar-collapse" id="menuPrincipal">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-                <li class="nav-item" style="margin-right: auto;">
-                    <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index" style="display:flex; align-items:center;">
-                        <img class="logo" src="~/images/logo.jpg" alt="Logo Aguilu">
-                        <span style="margin-left:10px; font-size:1.2rem;">Tienda Aguilu</span>
-                    </a>
-                </li>
+                
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
