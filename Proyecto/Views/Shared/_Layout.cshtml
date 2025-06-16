@@ -185,7 +185,7 @@
                     </ul>
                     @if (User.Identity.IsAuthenticated)
                     {
-
+                        
                         <form asp-controller="Auth" asp-action="Logout" method="post" class="d-flex align-items-center">
                             @Html.AntiForgeryToken()
                             <button type="submit" class="btn btn-outline-danger">
@@ -193,8 +193,11 @@
                                 Cerrar sesión
                             </button>
                         </form>
+                                
 
-                        <li class="nav-item" style="margin-right:auto; margin-left:320px">
+                          <!--
+
+                                <li class="nav-item" style="margin-right:auto; margin-left:320px">
                             <form asp-controller="Auth" asp-action="Logout" method="post" class="d-inline" style="display:flex; align-items:center;">
                                 @Html.AntiForgeryToken()
                                 <button type="submit" class="btn btn-danger d-flex align-items-center">
@@ -202,7 +205,8 @@
                                     Cerrar sesión
                                 </button>
                             </form>
-                        </li>
+                            </li>
+                                -->
 
                     }
                 </div>
@@ -238,7 +242,7 @@
             document.body.classList.toggle('dark-mode');
         }
     </script>
-    @RenderSection("Scripts", required: false)
+    
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
