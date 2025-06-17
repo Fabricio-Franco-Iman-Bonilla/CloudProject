@@ -17,7 +17,29 @@
             margin: 0;
             background: linear-gradient(to bottom, #ffffff, #B9D4DD, #87AAB5);
             font-family: 'Sour Gummy', sans-serif;
+            font-size: 18px;
         }
+
+        .dark-mode {
+            background: linear-gradient(to bottom, #2f2f2f, #3c3c3c, #4a4a4a) !important;
+            color: #f0f0f0 !important;
+        }
+
+            .dark-mode h1,
+            .dark-mode h3,
+            .dark-mode p.lead,
+            .dark-mode .text-dark,
+            .dark-mode .nav-link,
+            .dark-mode a {
+                color: #ffffff !important;
+            }
+
+            .dark-mode .navbar,
+            .dark-mode .footer {
+                background-color: #1e1e1e !important;
+                border-color: #333 !important;
+            }
+
 
         .card {
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -41,6 +63,33 @@
             list-style: none;
         }
 
+        .nav-link {
+            font-size: inherit;
+            transition: transform 0.2s ease-in-out;
+        }
+
+            .nav-link:hover {
+                text-decoration: underline;
+                background-color: #e6e6e6;
+            }
+
+        .dark-mode .nav-link:hover {
+            background-color: #333;
+        }
+
+        .dark-mode .navbar-toggler {
+            filter: invert(1); /* Cambia el icono a blanco */
+        }
+
+        .accesibilidad {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            z-index: 1000;
+            display: flex;
+            gap: 5px;
+        }
+
         /* Daltonismo solo dentro de container */
         .container.daltonic {
             filter: contrast(1.1);
@@ -58,6 +107,13 @@
     </style>
 </head>
 <body>
+
+    <!-- Botones de accesibilidad -->
+    <div class="accesibilidad">
+        <button onclick="cambiarTamanioTexto(1)" class="btn btn-sm btn-dark">A+</button>
+        <button onclick="cambiarTamanioTexto(-1)" class="btn btn-sm btn-dark">A-</button>
+        <button onclick="alternarContraste()" class="btn btn-sm btn-secondary">🌓 Contraste</button>
+    </div>
 
     <!-- Botones flotantes -->
     <button id="btnLeer" onclick="leerPagina()" style="
