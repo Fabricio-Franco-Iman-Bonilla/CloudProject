@@ -39,7 +39,7 @@ public class AuthController : Controller
         }
 
         var recaptchaResponse = Request.Form["g-recaptcha-response"];
-        var secretKey = "6LcdREorAAAAAE3LdF07YLdVZmi54v9mtG_qQKOB";
+        var secretKey = "6Lcz32UrAAAAACHV8wsjoTJGjEicFeKYFaITByn7";
         var client = new HttpClient();
         var result = await client.PostAsync($"https://www.google.com/recaptcha/api/siteverify?secret={secretKey}&response={recaptchaResponse}", null);
         var json = await result.Content.ReadAsStringAsync();
