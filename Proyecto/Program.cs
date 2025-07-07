@@ -46,6 +46,22 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+//PARA CONFIGURAR CSP
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("Content-Security-Policy",
+        "default-src 'self'; script-src 'self' https://www.google.com https://www.gstatic.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'");
+    await next();
+});
+
+//PARA CLICKJACKING
+app.Use(async (context, next) =>
+{
+    context.Response.Headers.Add("X-Frame-Options", "DENY");
+    await next();
+});
+
+
 app.UseRouting();
 
 // Prevención de cacheo en páginas protegidas

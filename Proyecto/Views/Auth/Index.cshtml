@@ -48,6 +48,7 @@
 
         <!-- FORMULARIO -->
         <form action="/Auth/Login" method="post">
+            @Html.AntiForgeryToken()  <!--Protección CSRF -->
             <label for="nombre" style="font-size:16px">Nombre de Usuario</label>
             <input type="text" id="nombre" name="nombre" required>
 

@@ -30,6 +30,7 @@ public class AuthController : Controller
     }
 
     [HttpPost]
+    [ValidateAntiForgeryToken] // Valida el token enviado en el formulario
     public async Task<IActionResult> Login(string nombre, string contra)
     {
         if (_loginService.IsLocked(nombre, out TimeSpan tiempoRestante))
