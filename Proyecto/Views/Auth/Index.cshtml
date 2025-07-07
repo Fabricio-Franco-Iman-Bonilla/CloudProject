@@ -4,6 +4,7 @@
     var captchaB = new Random().Next(1, 10);
     ViewBag.CaptchaA = captchaA;
     ViewBag.CaptchaB = captchaB;
+    var nonce = Context.Items["cspNonce"]?.ToString();
 }
 
 <!DOCTYPE html>
@@ -29,7 +30,7 @@
                 Intenta de nuevo en <span id="timer">@ViewBag.TiempoRestante</span> segundos.
             </div>
 
-            <script>
+            <script nonce="@nonce">
                 let segundos = parseInt("@ViewBag.TiempoRestante");
                 const timerSpan = document.getElementById("timer");
 
@@ -87,7 +88,7 @@
 
     @if (!ViewData.ModelState.IsValid && ViewBag.TiempoRestante == null)
     {
-        <script>
+        <script nonce="@nonce">
             window.addEventListener('DOMContentLoaded', function () {
                 var modal = new bootstrap.Modal(document.getElementById('errorModal'));
                 modal.show();

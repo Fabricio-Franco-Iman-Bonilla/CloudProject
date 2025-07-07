@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Tienda de Peluche";
+    var nonce = Context.Items["cspNonce"]?.ToString();
 }
 
 
@@ -57,7 +58,7 @@
 </div>
 
 <!-- Scripts -->
-<script>
+<script nonce="@nonce">
     // Mostrar imagen en el modal
     function showImage(element) {
         const modalImage = document.getElementById('modalImage');
@@ -81,7 +82,7 @@
 </script>
 
 <!-- Estilos adicionales -->
-<style>
+<style nonce="@nonce">
     .modal-content {
         background: none;
         border: none;

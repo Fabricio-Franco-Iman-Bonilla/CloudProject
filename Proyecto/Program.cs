@@ -49,20 +49,24 @@ app.UseStaticFiles();
 //PARA CONFIGURAR CSP
 app.Use(async (context, next) =>
 {
+    var nonce = Convert.ToBase64String(Guid.NewGuid().ToByteArray());
+    context.Items["cspNonce"] = nonce;
+
     context.Response.Headers.Add("Content-Security-Policy",
-        "default-src 'self'; " +
-        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.google.com https://www.gstatic.com https://www.recaptcha.net; " +
-        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; " +
-        "font-src 'self' https://fonts.gstatic.com; " +
-        "img-src 'self' data:; " +
-        "frame-src https://www.google.com https://www.recaptcha.net; " +
-        "connect-src 'self'; " +
-        "base-uri 'self'; " +                     // Evita ataques con <base> maliciosas
-        "form-action 'self'; " +                  // Solo tu dominio puede recibir formularios
-        "frame-ancestors 'none'; " +              // Previene clickjacking
-        "object-src 'none';");                    // Bloquea Flash/Java/etc.
+        $"default-src 'self'; " +
+        $"script-src 'self' 'nonce-{nonce}' https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net; " +
+        $"style-src 'self' 'nonce-{nonce}' https://fonts.googleapis.com https://cdn.jsdelivr.net; " +
+        $"font-src 'self' https://fonts.gstatic.com; " +
+        $"img-src 'self' data:; " +
+        $"frame-src https://www.google.com https://www.recaptcha.net; " +
+        $"connect-src 'self'; " +
+        $"form-action 'self'; " +
+        $"frame-ancestors 'none'; " +
+        $"object-src 'none';");
+
     await next();
 });
+
 
 
 
