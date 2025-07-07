@@ -50,9 +50,21 @@ app.UseStaticFiles();
 app.Use(async (context, next) =>
 {
     context.Response.Headers.Add("Content-Security-Policy",
-        "default-src 'self'; script-src 'self' https://www.google.com https://www.gstatic.com; style-src 'self' https://fonts.googleapis.com; font-src https://fonts.gstatic.com; img-src 'self'");
+        "default-src 'self'; " +
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.google.com https://www.gstatic.com https://www.recaptcha.net; " +
+        "style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; " +
+        "font-src 'self' https://fonts.gstatic.com; " +
+        "img-src 'self' data:; " +
+        "frame-src https://www.google.com https://www.recaptcha.net; " +
+        "connect-src 'self'; " +
+        "base-uri 'self'; " +                     // Evita ataques con <base> maliciosas
+        "form-action 'self'; " +                  // Solo tu dominio puede recibir formularios
+        "frame-ancestors 'none'; " +              // Previene clickjacking
+        "object-src 'none';");                    // Bloquea Flash/Java/etc.
     await next();
 });
+
+
 
 //PARA CLICKJACKING
 app.Use(async (context, next) =>
