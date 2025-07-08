@@ -34,9 +34,6 @@ builder.Services
 // Autorización (sin fallback por ahora)
 builder.Services.AddAuthorization();
 
-
-
-
 var app = builder.Build();
 
 // Configuración de entorno
