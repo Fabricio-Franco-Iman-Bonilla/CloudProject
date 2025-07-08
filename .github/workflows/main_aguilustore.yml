@@ -1,7 +1,7 @@
 # Docs for the Azure Web Apps Deploy action: https://github.com/Azure/webapps-deployAdd commentMore actions
 # More GitHub Actions for Azure: https://github.com/Azure/actions
 
-name: Build and deploy ASP.Net Core app to Azure Web App - AguiluStore
+name: Build and deploy ASP.Net Core app to Azure Web App - AguiluStore4
 
 on:
   push:
