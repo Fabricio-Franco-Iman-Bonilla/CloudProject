@@ -34,16 +34,7 @@ builder.Services
 // Autorización (sin fallback por ahora)
 builder.Services.AddAuthorization();
 
-builder.Services.AddCors(options =>
-{
-    options.AddPolicy("CorsSegura", policy =>
-    {
-        policy.WithOrigins("https://aguilustore-eedyf0hxc4hhahb6.canadacentral-01.azurewebsites.net") // ⚠️ Cambia por tu dominio real
-              .AllowAnyHeader()
-              .AllowAnyMethod()
-              .AllowCredentials();
-    });
-});
+
 
 
 var app = builder.Build();
@@ -57,7 +48,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
-app.UseCors("CorsSegura");
 
 //PARA CONFIGURAR CSP
 app.Use(async (context, next) =>
