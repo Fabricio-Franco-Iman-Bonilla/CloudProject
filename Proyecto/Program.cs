@@ -57,12 +57,15 @@ app.Use(async (context, next) =>
         $"script-src 'self' 'nonce-{nonce}' https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net; " +
         $"style-src 'self' 'nonce-{nonce}' https://fonts.googleapis.com https://cdn.jsdelivr.net; " +
         $"font-src 'self' https://fonts.gstatic.com; " +
-        $"img-src 'self' data:; " +
+        $"img-src 'self' data: https://www.google.com https://www.gstatic.com; " +
         $"frame-src https://www.google.com https://www.recaptcha.net; " +
         $"connect-src 'self'; " +
         $"form-action 'self'; " +
         $"frame-ancestors 'none'; " +
-        $"object-src 'none';");
+        $"object-src 'none'; " +
+        $"base-uri 'self';"); // ← importante para CSP moderna
+    await next();
+
 
     await next();
 });
