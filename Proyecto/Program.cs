@@ -57,6 +57,7 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
+app.UseCors("CorsSegura");
 
 //PARA CONFIGURAR CSP
 app.Use(async (context, next) =>
