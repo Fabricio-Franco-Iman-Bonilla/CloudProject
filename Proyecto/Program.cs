@@ -46,6 +46,7 @@ if (!app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
+
 //PARA CONFIGURAR CSP
 app.Use(async (context, next) =>
 {
@@ -64,9 +65,6 @@ app.Use(async (context, next) =>
         $"frame-ancestors 'none'; " +
         $"object-src 'none'; " +
         $"base-uri 'self';"); // ← importante para CSP moderna
-    await next();
-
-
     await next();
 });
 
